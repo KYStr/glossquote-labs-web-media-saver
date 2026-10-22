@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "task": "MD22-38-RELEASE-A",
-  "scope": "Executable/config source; complete source manifest follows metadata finalization",
+  "task": "WMA22-F01-B",
+  "scope": "Approved executable/config source; public documents are fixed by the repository commit/tree",
   "files": [
     {
       "path": ".gitignore",
@@ -90,8 +90,8 @@
     },
     {
       "path": "scripts/release.mjs",
-      "bytes": 5963,
-      "sha256": "700170681a8942047cfa13e898e05200ecc47276316a945e4781d86b7f0b9147"
+      "bytes": 6613,
+      "sha256": "ec7124f04a632f45e6cd220c448a7c127464c901ea932bf652dc22aac13b22ab"
     },
     {
       "path": "scripts/serve.mjs",
@@ -140,8 +140,8 @@
     },
     {
       "path": "test/release.test.mjs",
-      "bytes": 10532,
-      "sha256": "7ce5290bcc6e3b0ae3c348848d319af1e19fceedd4b96b6ef41c1959eb8c65ac"
+      "bytes": 12841,
+      "sha256": "7e5fb43909b622c52444508a3ce1a180cebfc51ba3cfcfe9e3fe2b2c723468f9"
     },
     {
       "path": "test/url-plan.test.mjs",

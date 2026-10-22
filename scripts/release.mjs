@@ -48,7 +48,8 @@ export async function verifyRelease(root = ROOT) {
     ['index.html', '/', 'zh-Hant', 'https://glossquote.com/'],
     ['en/index.html', '/en/', 'en', 'https://glossquote.com/en/'],
   ]) {
-    const html = (await regularFile(path.join(root, 'dist', file))).toString('utf8');
+    const htmlBytes = await regularFile(path.join(root, 'dist', file));
+    const html = htmlBytes.toString('utf8');
     assert(html.includes(`<html lang="${language}">`));
     assert.equal((html.match(/<meta name="robots" content="index,follow">/g) ?? []).length, 1);
     assert(!html.includes('noindex') && !html.includes('__ROBOTS__') && !html.includes('__SEO_LINKS__'));
@@ -60,6 +61,15 @@ export async function verifyRelease(root = ROOT) {
     assert.equal((html.match(/rel="alternate" hreflang=/g) ?? []).length, 3);
     assert(html.includes(`href="${home}"`));
     const publicHtml = (await regularFile(path.join(root, 'public', file))).toString('utf8');
+    // Only the two approved release substitutions may change the public HTML.
+    const expectedLinks = [
+      `<link rel="canonical" href="${RELEASE.origin}${route}">`,
+      `<link rel="alternate" hreflang="zh-Hant" href="${RELEASE.origin}/">`,
+      `<link rel="alternate" hreflang="en" href="${RELEASE.origin}/en/">`,
+      `<link rel="alternate" hreflang="x-default" href="${RELEASE.origin}/">`,
+    ].join('\n  ');
+    const expectedHtml = publicHtml.replace('__ROBOTS__', 'index,follow').replace('__SEO_LINKS__', expectedLinks);
+    assert(htmlBytes.equals(Buffer.from(expectedHtml)), 'RELEASE_HTML_CHANGED');
     assert.equal(html.slice(html.indexOf('<body>')), publicHtml.slice(publicHtml.indexOf('<body>')), 'RELEASE_UI_CHANGED');
   }
   const expectedHeaders = `/*\n${Object.entries(REQUIRED_HEADERS).map(([name, value]) => `  ${name}: ${value}`).join('\n')}\n`;

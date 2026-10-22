@@ -2,7 +2,7 @@
 
 完全網頁、媒體在瀏覽器本地處理。保存瀏覽器能直接讀取的公開 HTTPS 影音直鏈或本機檔案原始 bytes，也可從瀏覽器支援的短片／音檔取出 WAV。使用者不需安裝、解壓或啟動助手。
 
-**Source 已在此公開 repository 發布；hosting 仍待維護者部署及驗證。** 預定正式網域是 `https://media.glossquote.com/` 與 `/en/`，此文件不表示網站已上線，外部驗收也尚未完成。
+**正式網站已上線：[繁體中文](https://media.glossquote.com/)／[English](https://media.glossquote.com/en/)。** 2026-10-22 本輪只修正來源的發布 HTML 驗收器（F01），現站仍使用原發布產物，沒有重新部署。F01 修正版已通過主驗、待外部確認；整體外驗維持 partial，未驗範圍見 [主驗紀錄](PRIMARY-ACCEPTANCE.md)。
 
 | 現有功能 | 上限／限制 |
 |---|---|
@@ -41,4 +41,4 @@ release 命令只生成並驗證固定 `https://media.glossquote.com` 的 `dist`
 - [後續平台與格式路線：尚未實作](docs/PRODUCT-NEXT.md)
 - [35個核准程式／設定檔的 bytes/SHA](SOURCE-MANIFEST.json)
 
-`SOURCE-MANIFEST.json` SHA-256 為 `1d1d9d3f83c0c1522047071577f014adea74a0073a6d0a64b4de889e5d622e2c`。它描述程式／設定，不包含本份公開說明文件；完整版本由 Git commit/tree 固定。
+`SOURCE-MANIFEST.json` SHA-256 為 `c7011a55ed499761628236ff4146009c6144fb6d3afb1183f6a758b797d39cc2`。它描述程式／設定，不包含本份公開說明文件；完整版本由 Git commit/tree 固定。

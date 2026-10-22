@@ -119,6 +119,40 @@ for (const [name, file, alter] of [
     await writeFile(filename, alter(await readFile(filename, 'utf8'))); await rehash(root); await assert.rejects(verifyRelease(root));
   } finally { await cleanup(root); }
 });
+for (const file of ['index.html', 'en/index.html']) {
+  for (const [name, alter] of [
+    ['additional robots NOINDEX', html => html.replace('</head>', '<meta name="robots" content="NOINDEX">\n</head>')],
+    ['additional robots none', html => html.replace('</head>', '<meta name="robots" content="none">\n</head>')],
+    ['additional googlebot NOINDEX', html => html.replace('</head>', '<meta name="googlebot" content="NOINDEX">\n</head>')],
+    ['second canonical with single quotes', html => html.replace('</head>', "<link rel='canonical' href='https://example.com/wrong'>\n</head>")],
+    ['removed viewport', html => html.replace(/  <meta name="viewport"[^>]+>\n/, '')],
+    ['changed charset', html => html.replace('charset="utf-8"', 'charset="windows-1252"')],
+    ['changed title', html => html.replace(/<title>[^<]*<\/title>/, '<title>Unapproved title</title>')],
+    ['removed description', html => html.replace(/  <meta name="description"[^>]+>\n/, '')],
+  ]) test(`RELEASE rejects ${file} ${name} with unchanged body and a self-consistent rehashed manifest`, async () => {
+    const root = await fixture();
+    try {
+      await prepareRelease(root);
+      const filename = path.join(root, 'dist', file);
+      const before = await readFile(filename, 'utf8');
+      const after = alter(before);
+      assert.notEqual(after, before, 'HEAD_MUTATION_DID_NOT_APPLY');
+      assert.equal(after.slice(after.indexOf('<body>')), before.slice(before.indexOf('<body>')), 'BODY_MUTATED');
+      await writeFile(filename, after);
+      await rehash(root);
+      const manifest = JSON.parse(await readFile(path.join(root, 'dist/manifest.json'), 'utf8'));
+      const records = [];
+      for (const output of DIST_FILES) {
+        const bytes = await readFile(path.join(root, 'dist', output));
+        records.push({ path: output, bytes: bytes.length, sha256: digest(bytes) });
+      }
+      assert.deepEqual(manifest.files, records, 'MUTATION_MANIFEST_NOT_SELF_CONSISTENT');
+      assert.equal(manifest.contentSha256, digest(`${JSON.stringify(records)}\n`));
+      assert.notEqual(manifest.files.find(item => item.path === file).sha256, digest(before));
+      await assert.rejects(verifyRelease(root), { code: 'ERR_ASSERTION', message: 'RELEASE_HTML_CHANGED' });
+    } finally { await cleanup(root); }
+  });
+}
 test('RELEASE rejects altered config before writing output, unknown output and extra manifest fields', async () => {
   const root = await fixture();
   try {
