@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <meta name="robots" content="__ROBOTS__">
+  <title>影音直鏈保存與 WAV 音訊｜GlossQuote</title>
+  <meta name="description" content="在瀏覽器保存可讀的影音直鏈或本機檔案，或取出短片的 WAV 音訊。檔案不會上傳到 GlossQuote，無須安裝助手。">
+  __SEO_LINKS__
+  <link rel="icon" href="/assets/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/style.css">
+  <script type="module" src="/assets/app.mjs"></script>
+</head>
+<body>
+  <a class="skip" href="#workspace">跳到操作區</a>
+  <header class="topbar"><a class="brand" href="https://glossquote.com/">Gloss Tools <span>by GlossQuote</span></a><nav aria-label="語言"><span aria-current="page">繁中</span><a href="/en/" lang="en" hreflang="en">English</a></nav></header>
+  <main>
+    <div class="intro"><h1>把影音保存到你的電腦</h1><p>貼上可直接讀取的影音連結，或選一份本機檔案。保存原檔，也能取出 WAV 聲音。</p></div>
+    <div class="layout">
+      <section id="workspace" class="workspace" aria-label="影音保存工具" tabindex="-1">
+        <form id="media-form" novalidate>
+          <fieldset class="source-options"><legend>影音來源</legend><label><input type="radio" name="source" value="url" checked>影音直鏈</label><label><input type="radio" name="source" value="file">本機檔案</label></fieldset>
+          <div id="url-panel" class="field"><label for="url">HTTPS 影音連結</label><input id="url" type="url" maxlength="2048" inputmode="url" placeholder="https://…" autocomplete="off" autocapitalize="off" spellcheck="false" aria-describedby="source-help error"><p id="source-help" class="hint">需要直接連到影音檔，且來源允許此網站讀取；平台作品頁不適用。</p></div>
+          <div id="file-panel" class="field" hidden><label for="file">選取本機影音檔案</label><input id="file" type="file" accept=".wav,.mp3,.mp4,.m4a,.webm,.ogg,audio/*,video/*" aria-describedby="file-help error"><p id="file-help" class="hint">檔案留在此瀏覽器處理，不會上傳；選檔只提供格式提示，仍會檢查實際內容。</p></div>
+          <fieldset class="output-options"><legend>你想取得什麼？</legend><label><input type="radio" name="mode" value="original" checked><span><strong>保存原檔</strong><small>保留原始 bytes，最多 32 MiB。</small></span></label><label><input type="radio" name="mode" value="wav"><span><strong>取出 WAV 音訊</strong><small>輸入最多 16 MiB、120 秒；依瀏覽器解碼支援。</small></span></label></fieldset>
+          <p class="privacy">處理在這個瀏覽器完成。網址模式會直接連到來源；本機檔案不需向外取得媒體。</p>
+          <div class="actions"><button id="start" class="primary" type="submit">開始準備檔案</button><button id="cancel" type="button" hidden>取消</button><button id="clear" type="button" class="quiet">清除</button></div>
+        </form>
+        <section class="status-area" aria-label="處理狀態"><p id="status" role="status" aria-live="polite">貼上影音直鏈，或選取本機檔案。</p><progress id="stage-progress" aria-labelledby="status" hidden></progress><p id="read-progress" class="hint"></p><p id="error" role="alert" hidden></p><div id="result" hidden><p id="result-details" class="data"></p><a id="download" class="download">下載檔案</a><p class="hint">由瀏覽器處理保存位置；檔案準備完成不代表已存入磁碟。修改來源或選項後，這份結果會失效。</p></div></section>
+        <div class="demo-row"><button id="demo" class="text-button" type="button">試用示範 WAV 音檔</button><span class="hint">無需準備連結，不會自動播放。</span><p id="demo-note" class="hint" role="status"></p></div>
+      </section>
+      <aside class="guide" aria-labelledby="guide-title"><h2 id="guide-title">哪些來源能用？</h2><p>允許瀏覽器讀取的直接影音檔，或你選取的本機檔案。辨識 WAV、MP3、MP4/M4A、WebM 與 Ogg 容器。</p><p>不擷取 YouTube 等平台作品頁，不處理登入、DRM、直播或播放清單。可用直鏈也可能因 CORS、到期或重新導向而無法讀取。</p><details><summary>WAV 與格式限制</summary><p>WAV 是未壓縮音訊，通常比原本的壓縮音檔大。最多 120 秒、2 聲道、48 kHz、64 MiB 解碼 PCM；不輸出 MP3，也不自動丟棄聲道。</p><p>原檔只做基本容器與類型檢查，不是完整解碼驗證或安全掃描。MP4／WebM 不保證含可解的音軌。</p></details><details><summary>隱私、取消與清理</summary><p>沒有影音代理、帳號、遙測或持久快取。直鏈來源仍可看到你的 IP 與請求；本機處理不等於完全離線。</p><p>瀏覽器解碼不能可靠中止；取消會等待它結束才開放下一份工作。清除與離開會釋放本頁工作參照，不刪你已保存的檔案，也不保證立刻回收 RAM 或抹除系統快取。</p></details></aside>
+    </div>
+    <noscript><p class="no-script">此工具需要支援 JavaScript 的瀏覽器；目前尚未讀取任何媒體。</p></noscript>
+  </main>
+  <footer><a href="https://glossquote.com/">回 Gloss Tools 首頁</a><span>媒體由你選擇，檔案由瀏覽器處理。</span></footer>
+</body>
+</html>

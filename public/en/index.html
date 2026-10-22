@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <meta name="robots" content="__ROBOTS__">
+  <title>Save direct media links and WAV audio | GlossQuote</title>
+  <meta name="description" content="Save a readable media link or local file, or extract WAV audio from a short clip in your browser. Files are not uploaded to GlossQuote. No helper installation.">
+  __SEO_LINKS__
+  <link rel="icon" href="/assets/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/style.css">
+  <script type="module" src="/assets/app.mjs"></script>
+</head>
+<body>
+  <a class="skip" href="#workspace">Skip to the tool</a>
+  <header class="topbar"><a class="brand" href="https://glossquote.com/en/">Gloss Tools <span>by GlossQuote</span></a><nav aria-label="Language"><a href="/" lang="zh-Hant" hreflang="zh-Hant">繁中</a><span aria-current="page">English</span></nav></header>
+  <main>
+    <div class="intro"><h1>Save media to your computer</h1><p>Use a directly readable media link or a local file. Keep the original, or extract its sound as WAV.</p></div>
+    <div class="layout">
+      <section id="workspace" class="workspace" aria-label="Media saving tool" tabindex="-1">
+        <form id="media-form" novalidate>
+          <fieldset class="source-options"><legend>Media source</legend><label><input type="radio" name="source" value="url" checked>Direct media link</label><label><input type="radio" name="source" value="file">Local file</label></fieldset>
+          <div id="url-panel" class="field"><label for="url">HTTPS media link</label><input id="url" type="url" maxlength="2048" inputmode="url" placeholder="https://…" autocomplete="off" autocapitalize="off" spellcheck="false" aria-describedby="source-help error"><p id="source-help" class="hint">Use a direct media file whose source permits this website to read it. Platform watch pages are not supported.</p></div>
+          <div id="file-panel" class="field" hidden><label for="file">Choose a local media file</label><input id="file" type="file" accept=".wav,.mp3,.mp4,.m4a,.webm,.ogg,audio/*,video/*" aria-describedby="file-help error"><p id="file-help" class="hint">The file stays in this browser; it is not uploaded. File selection is only a format hint; actual content is checked.</p></div>
+          <fieldset class="output-options"><legend>What would you like to keep?</legend><label><input type="radio" name="mode" value="original" checked><span><strong>Save the original</strong><small>Keep the original bytes, up to 32 MiB.</small></span></label><label><input type="radio" name="mode" value="wav"><span><strong>Extract WAV audio</strong><small>Input up to 16 MiB and 120 seconds; decoding depends on your browser.</small></span></label></fieldset>
+          <p class="privacy">Processing happens in this browser. Link mode contacts the source directly; local files need no media fetch.</p>
+          <div class="actions"><button id="start" class="primary" type="submit">Prepare file</button><button id="cancel" type="button" hidden>Cancel</button><button id="clear" type="button" class="quiet">Clear</button></div>
+        </form>
+        <section class="status-area" aria-label="Processing status"><p id="status" role="status" aria-live="polite">Paste a direct media link or choose a local file.</p><progress id="stage-progress" aria-labelledby="status" hidden></progress><p id="read-progress" class="hint"></p><p id="error" role="alert" hidden></p><div id="result" hidden><p id="result-details" class="data"></p><a id="download" class="download">Download file</a><p class="hint">Your browser handles the save location. A prepared file is not proof it was saved to disk. Changing the source or output invalidates this result.</p></div></section>
+        <div class="demo-row"><button id="demo" class="text-button" type="button">Try the demo WAV file</button><span class="hint">No link needed. It will not play automatically.</span><p id="demo-note" class="hint" role="status"></p></div>
+      </section>
+      <aside class="guide" aria-labelledby="guide-title"><h2 id="guide-title">Which sources work?</h2><p>A direct media file that allows browser access, or a local file you choose. Recognized containers: WAV, MP3, MP4/M4A, WebM and Ogg.</p><p>Platform watch pages such as YouTube, logins, DRM, live streams and playlists are not supported. CORS, expiry or redirects may prevent reading a direct link.</p><details><summary>WAV and format limits</summary><p>WAV is uncompressed audio and is often larger than compressed input. Limits: 120 seconds, 2 channels, 48 kHz and 64 MiB of decoded PCM. No MP3 encoding or silently discarded channels.</p><p>Original files get basic container and type checks, not full decoding or a security scan. MP4 and WebM do not guarantee a decodable audio track.</p></details><details><summary>Privacy, cancellation and cleanup</summary><p>No media proxy, account, telemetry or persistent cache. Direct sources can still see your IP and requests; local processing does not mean fully offline.</p><p>Browser decoding cannot reliably be aborted. Cancellation waits for it to settle before another job can start. Clear and page exit release this page's work references; they do not delete saved files or guarantee immediate RAM recovery or removal of system caches.</p></details></aside>
+    </div>
+    <noscript><p class="no-script">This tool requires a JavaScript-capable browser. No media has been read.</p></noscript>
+  </main>
+  <footer><a href="https://glossquote.com/en/">Back to Gloss Tools</a><span>You choose the media. Your browser handles the file.</span></footer>
+</body>
+</html>

@@ -1,0 +1,13 @@
+{
+  "name": "@glossquote/web-media-saver",
+  "version": "0.1.0-web-m1",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=24.0.0" },
+  "scripts": {
+    "test": "node --test --test-concurrency=1 test/*.test.mjs",
+    "check": "node scripts/check.mjs",
+    "build": "node scripts/build-web.mjs",
+    "serve": "node scripts/serve.mjs"
+  }
+}
